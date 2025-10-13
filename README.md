@@ -1,6 +1,6 @@
-## AI Powered Auto-Generated Shorts 
+## AI Powered Auto-Generated Short Form Videos for YouTube Shorts
 
-This repository is for an AI agent that automatically creates YouTube Shorts from script generation to upload.
+This repository is for an AI n8n agent that automatically creates short form video for YouTube Shorts from script generation to upload.
 
 ## What This Does 
 
@@ -21,7 +21,7 @@ This repository is for an AI agent that automatically creates YouTube Shorts fro
 - YouTube Data API
 - Google Cloud Text to Speech
 
-## Using our Agent Basics  
+## Using Our Agent Basics  
 
 Coming soon - This project is under active development 
 
