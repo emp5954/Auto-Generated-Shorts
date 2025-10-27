@@ -1,0 +1,72 @@
+import streamlit as st
+import numpy as np
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+
+st.title("Diabetes Detection App")
+st.write("Enter your health info to see predictions from Machine Learning and ACT-R style models.")
+
+# --- User Input Form ---
+age = st.number_input("Age", min_value=0, max_value=120, value=30)
+bmi = st.number_input("BMI", min_value=10.0, max_value=60.0, value=22.0)
+smoker = st.selectbox("Smoker?", ("Yes", "No"))
+blood_pressure = st.number_input("Blood Pressure", min_value=60, max_value=200, value=120)
+
+# --- Dummy Dataset for Demo ---
+np.random.seed(42)
+N = 100
+demo_df = pd.DataFrame({
+    "age": np.random.randint(20, 70, N),
+    "bmi": np.random.normal(28, 6, N),
+    "smoker": np.random.choice([0, 1], N),
+    "blood_pressure": np.random.normal(120, 18, N),
+    "diabetic": np.random.choice([0, 1], N, p=[0.7, 0.3])
+})
+
+# --- ML Model Setup (Train in-memory for demo) ---
+X = demo_df[["AGE", "BMI", "SMOKER", "BLOOD_PRESSURE"]]
+y = demo_df["diabetic"]
+model = RandomForestClassifier(random_state=2)
+model.fit(X, y)
+
+def predict_ml(user_features):
+    pred_prob = model.predict_proba([user_features])[0][1]
+    label = "Diabetic" if pred_prob > 0.5 else "Non-Diabetic"
+    # Feature importances
+    importances = dict(zip(X.columns, model.feature_importances_))
+    return label, pred_prob, importances
+
+def actr_predict(user_features):
+    matches = demo_df[
+        (abs(demo_df.age - user_features[0]) <= 5) &
+        (abs(demo_df.bmi - user_features[1]) <= 3) &
+        (demo_df.smoker == user_features[2])
+    ]
+    if not matches.empty:
+        prob = matches.diabetic.mean()
+        pred = "Diabetic" if prob > 0.5 else "Non-Diabetic"
+    else:
+        prob = None
+        pred = "No matching cases"
+    return pred, prob, len(matches)
+
+if st.button("Predict"):
+    user_features = [age, bmi, 1 if smoker == "Yes" else 0, blood_pressure]
+
+    ml_pred, ml_prob, ml_importances = predict_ml(user_features)
+    st.subheader("Machine Learning Model (Random Forest)")
+    st.write(f"Prediction: **{ml_pred}** (Probability: {ml_prob:.2f})")
+    st.write("Feature Importances:")
+    st.json(ml_importances)
+
+    actr_pred, actr_prob, match_count = actr_predict(user_features)
+    st.subheader("Human-Like Reasoning (ACT-R Style)")
+    st.write(f"Prediction: **{actr_pred}**")
+    if actr_prob is not None:
+        st.write(f"Probability (based on {match_count} memory matches): {actr_prob:.2f}")
+    else:
+        st.write("No matching past cases found.")
+
+    st.subheader("Feature Importance Chart")
+    st.bar_chart(pd.DataFrame.from_dict(ml_importances, orient="index", columns=["Importance"]))
