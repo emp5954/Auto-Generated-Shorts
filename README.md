@@ -30,10 +30,10 @@ This agent saves hours by automating:
 
 ## Example Output
 
-- **Title**: "Cat Brainrot Explained 🧠🐱 #Shorts"
-- **Script**: "Cats experience brainrot when they're hyper-stimulated or bored. Watch as they bounce off walls or stare into space."
-- **Hashtags**: #catbrainrot #funnycats #shorts #catbehavior #viral
-- **Video**: [YouTube Shorts](https://www.youtube.com/shorts/Q1-pJyYYE5U)
+- **Title**: "When Cats Get Brainrot #Shorts #Cats #Brainrot #Meme"
+- **Script**: "Cats are adorable, but sometimes they just lose it! Watch as my cat gets distracted by… nothing! Pure chaos!
+- **Hashtags**: #catbrainrot #funnycats #catantics #petproblems #catvideos #felinefunnies #catsofinstagram #adorablecats #crazycats #catlovers #petlovers #animalantics #catsareweird #caturday #comediccats"
+- **Video**: [YouTube Shorts](https://www.youtube.com/shorts/9B1SFZwuwRo)
 
 ---
 
